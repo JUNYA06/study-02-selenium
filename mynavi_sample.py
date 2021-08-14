@@ -1,3 +1,7 @@
+#ログ出力について、どのような観点で出力したら良いかわからず記載できませんでした。
+#これから回答を見て、復習します。
+
+
 import os
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver import Firefox
