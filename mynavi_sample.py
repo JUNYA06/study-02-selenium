@@ -2,6 +2,7 @@ import os
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pandas as pd
 import sys
@@ -16,9 +17,12 @@ logging.basicConfig(format=log_fmt, level=logging.ERROR)
 def export_csv(list):
     list.to_csv("list.csv")
 
-
+def setup_class(cls):
+    cls.driver = webdriver.Chrome(ChromeDriverManager().install())
 
 def set_driver(driver_path, headless_flg):
+    
+    
     if "chrome" in driver_path:
           options = ChromeOptions()
     else:
@@ -47,6 +51,8 @@ def set_driver(driver_path, headless_flg):
 def main():
 
     search_keyword = args[1]
+    # 08/21 修正 driverのバージョンアップ 
+    setup_class()
     # driverを起動
     if os.name == 'nt': #Windows
         driver = set_driver("chromedriver.exe", False)
