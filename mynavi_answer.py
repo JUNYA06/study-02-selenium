@@ -78,7 +78,6 @@ def main():
     search_keyword = args[1]
     if search_keyword is None:
         print("第一引数に検索ワードを入れてください！")
-        log("エラー：検索ワードなし")
     log("検索ワード:{}".format(search_keyword))
         
     # 08/21 修正 driverのバージョンアップ 
@@ -113,14 +112,22 @@ def main():
     # 空のDataFrame作成
     df = pd.DataFrame()
 
-    ctr = 0
+    exp_name_list = []
+    exp_copy_list = []
+    exp_status_list = []
+    exp_first_year_fee_list = []
+    count = 0
+    sucess = 0
+    fail = 0
+
+    while Ture:
     # 1ページ分繰り返し
-    for a in range(2):
-        ctr += 1
-        log("{}ページ目取得".format(ctr))
-        try:
+        for a in range(2):
+            
             name_list = driver.find_elements_by_class_name("cassetteRecruit__name")
             paying_list = driver.find_elements_by_class_name("tableCondition__body")
+            # status_list = driver.find_elements_by_class_name("tableCondition__body")
+            # table_list = driver.find_elements_by_class_name("tableCondition__body")
 
             print(len(name_list))
             for name,paying in zip(name_list,paying_list):
@@ -135,11 +142,10 @@ def main():
             driver.find_element_by_class_name("pager__next").click()
             time.sleep(5)
             logging.info('')
-        except:
-            pass
-    export_csv(df)
-    logging.basicConfig(filename='example.log', format=log_fmt)
-    
+
+        export_csv(df)
+        logging.basicConfig(filename='example.log', format=log_fmt)
+        
 
 
 # 直接起動された場合はmain()を起動(モジュールとして呼び出された場合は起動しないようにするため)
